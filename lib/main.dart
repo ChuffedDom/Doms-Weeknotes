@@ -23,6 +23,7 @@ class Weeknotes extends StatelessWidget {
       title: "Dom's Weeknotes",
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: '--apple-system',
       ),
       home: const Homepage(),
     );
