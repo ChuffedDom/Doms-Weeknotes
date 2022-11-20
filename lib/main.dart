@@ -45,35 +45,38 @@ class _HomepageState extends State<Homepage> {
       appBar: AppBar(
         title: Text("Dom's Weeknotes"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: StreamBuilder(
-            stream: db
-                .collection('notes')
-                .orderBy('date', descending: true)
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              }
-              var docs = snapshot.data!.docs;
-              return ListView.builder(
-                  itemCount: docs.length,
-                  itemBuilder: (context, index) {
-                    var doc = docs[index];
-                    return NoteV1(
-                        date: doc["date"].toDate(),
-                        title: doc["title"],
-                        emoji: doc["emoji"],
-                        body: doc["body"].replaceAll("\\n", "\n"),
-                        published: doc["published"]);
-                  });
-            }),
+      body: Center(
+        child: Container(
+          padding: EdgeInsets.all(8.0),
+          constraints: BoxConstraints(maxWidth: 760),
+          child: StreamBuilder(
+              stream: db
+                  .collection('notes')
+                  .orderBy('date', descending: true)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+                var docs = snapshot.data!.docs;
+                return ListView.builder(
+                    itemCount: docs.length,
+                    itemBuilder: (context, index) {
+                      var doc = docs[index];
+                      return NoteV1(
+                          date: doc["date"].toDate(),
+                          title: doc["title"],
+                          emoji: doc["emoji"],
+                          body: doc["body"].replaceAll("\\n", "\n"),
+                          published: doc["published"]);
+                    });
+              }),
+        ),
       ),
     );
   }

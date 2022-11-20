@@ -1,11 +1,11 @@
 {
-    "name": "doms_weeknotes",
-    "short_name": "doms_weeknotes",
+    "name": "Dom's Weeknotes",
+    "short_name": "Dom's Weeknotes",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "What has Dom been getting up to",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
@@ -20,16 +20,47 @@
             "type": "image/png"
         },
         {
-            "src": "icons/Icon-maskable-192.png",
+            "src": "icons/maskable_icon_x48.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "icons/Icon-maskable-512.png",
-            "sizes": "512x512",
+            "src": "icons/maskable_icon_x72.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/maskable_icon_x96.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/maskable_icon_x128.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/maskable_icon_x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/maskable_icon_x384.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/maskable_icon_x512.png",
+            "sizes": "192x192",
             "type": "image/png",
             "purpose": "maskable"
         }
+        
     ]
 }
