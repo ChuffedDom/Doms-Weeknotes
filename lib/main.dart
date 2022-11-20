@@ -1,9 +1,13 @@
+import 'package:doms_weeknotes/noteV1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'login.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +29,12 @@ class Weeknotes extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: '--apple-system',
       ),
-      home: const Homepage(),
+      initialRoute: "/",
+      routes: {
+        '/': (context) => const Homepage(),
+        '/login': (context) => Login(),
+        '/add': (context) => AddNote(),
+      },
     );
   }
 }
@@ -38,13 +47,42 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  late bool _userLoggedIn;
   @override
   Widget build(BuildContext context) {
     var db = FirebaseFirestore.instance;
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        setState(() {
+          _userLoggedIn = false;
+        });
+      } else {
+        setState(() {
+          _userLoggedIn = true;
+        });
+      }
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text("Dom's Weeknotes"),
+        /* actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: (() {
+              FirebaseAuth.instance.signOut();
+            }),
+          )
+        ], */
       ),
+      floatingActionButton:
+          FirebaseAuth.instance.currentUser?.email == "dom@chuffed.solutions"
+              ? FloatingActionButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/add");
+                  },
+                  child: Icon(Icons.add),
+                )
+              : SizedBox.shrink(),
       body: Center(
         child: Container(
           padding: EdgeInsets.all(8.0),
@@ -56,6 +94,7 @@ class _HomepageState extends State<Homepage> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
+                  snapshot.connectionState.name;
                   return const Padding(
                     padding: EdgeInsets.all(20.0),
                     child: Center(
@@ -69,6 +108,7 @@ class _HomepageState extends State<Homepage> {
                     itemBuilder: (context, index) {
                       var doc = docs[index];
                       return NoteV1(
+                          doc: doc,
                           date: doc["date"].toDate(),
                           title: doc["title"],
                           emoji: doc["emoji"],
@@ -89,13 +129,16 @@ class NoteV1 extends StatelessWidget {
   final String emoji;
   final String body;
   final bool published;
-  const NoteV1(
-      {super.key,
-      required this.date,
-      required this.title,
-      required this.emoji,
-      required this.body,
-      required this.published});
+  final QueryDocumentSnapshot doc;
+  const NoteV1({
+    super.key,
+    required this.date,
+    required this.title,
+    required this.emoji,
+    required this.body,
+    required this.published,
+    required this.doc,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -110,11 +153,11 @@ class NoteV1 extends StatelessWidget {
         ),
         Text(
           title,
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.headline4,
         ),
         Text(
           emoji,
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.headline4,
         ),
         SizedBox(
           height: 10.0,
@@ -123,6 +166,21 @@ class NoteV1 extends StatelessWidget {
         SizedBox(
           height: 10.0,
         ),
+        FirebaseAuth.instance.currentUser?.email == "dom@chuffed.solutions"
+            ? TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return EditNote(queryDocumentSnapshot: doc);
+                      },
+                    ),
+                  );
+                },
+                child: Text("edit"),
+              )
+            : SizedBox.shrink(),
         Divider(),
         SizedBox(
           height: 30.0,
