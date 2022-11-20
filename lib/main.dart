@@ -32,8 +32,7 @@ class Weeknotes extends StatelessWidget {
       initialRoute: "/",
       routes: {
         '/': (context) => const Homepage(),
-        '/login': (context) => Login(),
-        '/add': (context) => AddNote(),
+        '/login': (context) => const Login(),
       },
     );
   }
@@ -47,12 +46,12 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  late bool _userLoggedIn;
   @override
   Widget build(BuildContext context) {
     var db = FirebaseFirestore.instance;
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    /* FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
+        print(user);
         setState(() {
           _userLoggedIn = false;
         });
@@ -61,10 +60,10 @@ class _HomepageState extends State<Homepage> {
           _userLoggedIn = true;
         });
       }
-    });
+    }); */
     return Scaffold(
       appBar: AppBar(
-        title: Text("Dom's Weeknotes"),
+        title: const Text("Dom's Weeknotes"),
         /* actions: [
           IconButton(
             icon: Icon(Icons.logout),
@@ -78,15 +77,22 @@ class _HomepageState extends State<Homepage> {
           FirebaseAuth.instance.currentUser?.email == "dom@chuffed.solutions"
               ? FloatingActionButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/add");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) {
+                          return AddNote();
+                        },
+                      ),
+                    );
                   },
-                  child: Icon(Icons.add),
+                  child: const Icon(Icons.add),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
       body: Center(
         child: Container(
-          padding: EdgeInsets.all(8.0),
-          constraints: BoxConstraints(maxWidth: 760),
+          padding: const EdgeInsets.all(8.0),
+          constraints: const BoxConstraints(maxWidth: 760),
           child: StreamBuilder(
               stream: db
                   .collection('notes')
@@ -148,9 +154,7 @@ class NoteV1 extends StatelessWidget {
         Text(
           DateFormat('yyyy-MM-dd').format(date),
         ),
-        SizedBox(
-          height: 10.0,
-        ),
+        const SizedBox(height: 10.0),
         Text(
           title,
           style: Theme.of(context).textTheme.headline4,
@@ -159,13 +163,9 @@ class NoteV1 extends StatelessWidget {
           emoji,
           style: Theme.of(context).textTheme.headline4,
         ),
-        SizedBox(
-          height: 10.0,
-        ),
+        const SizedBox(height: 10.0),
         MarkdownBody(data: body),
-        SizedBox(
-          height: 10.0,
-        ),
+        const SizedBox(height: 10.0),
         FirebaseAuth.instance.currentUser?.email == "dom@chuffed.solutions"
             ? TextButton(
                 onPressed: () {
@@ -180,11 +180,9 @@ class NoteV1 extends StatelessWidget {
                 },
                 child: Text("edit"),
               )
-            : SizedBox.shrink(),
-        Divider(),
-        SizedBox(
-          height: 30.0,
-        )
+            : const SizedBox.shrink(),
+        const Divider(),
+        const SizedBox(height: 30.0)
       ],
     );
   }
