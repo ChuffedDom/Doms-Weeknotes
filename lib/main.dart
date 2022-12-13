@@ -1,3 +1,4 @@
+import 'package:doms_weeknotes/future.dart';
 import 'package:doms_weeknotes/noteV1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -33,6 +34,8 @@ class Weeknotes extends StatelessWidget {
       routes: {
         '/': (context) => const Homepage(),
         '/login': (context) => const Login(),
+        '/future': (context) => const FutureNotes(),
+        '/edit-future': (context) => const EditFutureNote(),
       },
     );
   }
@@ -72,6 +75,40 @@ class _HomepageState extends State<Homepage> {
             }),
           )
         ], */
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              title: const Text('Daily'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              title: const Text('Weekly'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              title: const Text('Future'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+          ],
+        ),
       ),
       floatingActionButton:
           FirebaseAuth.instance.currentUser?.email == "dom@chuffed.solutions"
