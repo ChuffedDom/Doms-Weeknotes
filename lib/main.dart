@@ -1,3 +1,4 @@
+import 'package:doms_weeknotes/future.dart';
 import 'package:doms_weeknotes/noteV1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -33,6 +34,8 @@ class Weeknotes extends StatelessWidget {
       routes: {
         '/': (context) => const Homepage(),
         '/login': (context) => const Login(),
+        '/future': (context) => const FutureNotes(),
+        '/edit-future': (context) => const EditFutureNote(),
       },
     );
   }
@@ -72,6 +75,60 @@ class _HomepageState extends State<Homepage> {
             }),
           )
         ], */
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Column(
+                children: [
+                  Image.network(
+                    "/icons/drawer-icon.png",
+                    height: 100,
+                  ),
+                  Text(
+                    "Dom's Weeknotes",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.repeat),
+              title: const Text('Daily (Coming Soon)'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.calendar_today,
+                color: Colors.black,
+              ),
+              title: Text(
+                'Weekly',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/", (route) => false);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.arrow_forward),
+              title: const Text('Future'),
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/future", (route) => false);
+              },
+            ),
+          ],
+        ),
       ),
       floatingActionButton:
           FirebaseAuth.instance.currentUser?.email == "dom@chuffed.solutions"
