@@ -18,6 +18,64 @@ class _FutureNotesState extends State<FutureNotes> {
       appBar: AppBar(
         title: const Text("Dom's Weeknotes"),
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Column(
+                children: [
+                  Image.network(
+                    "/icons/drawer-icon.png",
+                    height: 100,
+                  ),
+                  Text(
+                    "Dom's Weeknotes",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.repeat),
+              title: const Text('Daily (Coming Soon)'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.calendar_today,
+              ),
+              title: Text(
+                'Weekly',
+              ),
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/", (route) => false);
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.arrow_forward,
+                color: Colors.black,
+              ),
+              title: const Text(
+                'Future',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/future", (route) => false);
+              },
+            ),
+          ],
+        ),
+      ),
       body: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 760),
@@ -50,8 +108,13 @@ class _FutureNotesState extends State<FutureNotes> {
                           : const SizedBox.shrink(),
                     ],
                   ),
+                  SizedBox(height: 20.0),
                   MarkdownBody(data: doc!["top_level"]),
                   SizedBox(height: 20.0),
+                  Text(
+                    "👷 Current Work",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
                   Image.network(doc["current_work_image_url"]),
                   SizedBox(height: 20.0),
                   MarkdownBody(data: doc["goals_success"]),
@@ -84,34 +147,6 @@ class _EditFutureNoteState extends State<EditFutureNote> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit Futurenotes"),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            ListTile(
-              title: const Text('Daily'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            ListTile(
-              title: const Text('Weekly'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            ListTile(
-              title: const Text('Future'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-          ],
-        ),
       ),
       body: Center(
         child: Container(

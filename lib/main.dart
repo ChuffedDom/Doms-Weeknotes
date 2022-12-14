@@ -80,31 +80,51 @@ class _HomepageState extends State<Homepage> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
+            DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
-              child: Text('Drawer Header'),
+              child: Column(
+                children: [
+                  Image.network(
+                    "/icons/drawer-icon.png",
+                    height: 100,
+                  ),
+                  Text(
+                    "Dom's Weeknotes",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ],
+              ),
             ),
             ListTile(
-              title: const Text('Daily'),
+              leading: Icon(Icons.repeat),
+              title: const Text('Daily (Coming Soon)'),
               onTap: () {
                 // Update the state of the app.
                 // ...
               },
             ),
             ListTile(
-              title: const Text('Weekly'),
+              leading: Icon(
+                Icons.calendar_today,
+                color: Colors.black,
+              ),
+              title: Text(
+                'Weekly',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               onTap: () {
-                // Update the state of the app.
-                // ...
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/", (route) => false);
               },
             ),
             ListTile(
+              leading: Icon(Icons.arrow_forward),
               title: const Text('Future'),
               onTap: () {
-                // Update the state of the app.
-                // ...
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/future", (route) => false);
               },
             ),
           ],
