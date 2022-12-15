@@ -41,7 +41,7 @@ class _FutureNotesState extends State<FutureNotes> {
             ),
             ListTile(
               leading: Icon(Icons.repeat),
-              title: const Text('Daily (Coming Soon)'),
+              title: const Text('Daily'),
               onTap: () {
                 // Update the state of the app.
                 // ...
