@@ -43,8 +43,8 @@ class _FutureNotesState extends State<FutureNotes> {
               leading: Icon(Icons.repeat),
               title: const Text('Daily'),
               onTap: () {
-                // Update the state of the app.
-                // ...
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/daily", (route) => false);
               },
             ),
             ListTile(
