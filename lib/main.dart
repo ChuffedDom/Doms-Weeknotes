@@ -1,3 +1,4 @@
+import 'package:doms_weeknotes/daily.dart';
 import 'package:doms_weeknotes/future.dart';
 import 'package:doms_weeknotes/noteV1.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class Weeknotes extends StatelessWidget {
         '/login': (context) => const Login(),
         '/future': (context) => const FutureNotes(),
         '/edit-future': (context) => const EditFutureNote(),
+        '/daily': (context) => const Dailies(),
       },
     );
   }
@@ -99,10 +101,10 @@ class _HomepageState extends State<Homepage> {
             ),
             ListTile(
               leading: Icon(Icons.repeat),
-              title: const Text('Daily (Coming Soon)'),
+              title: const Text('Daily'),
               onTap: () {
-                // Update the state of the app.
-                // ...
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/daily", (route) => false);
               },
             ),
             ListTile(
