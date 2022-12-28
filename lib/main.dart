@@ -8,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'login.dart';
 
@@ -83,7 +84,7 @@ class _HomepageState extends State<Homepage> {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.blue,
               ),
               child: Column(
@@ -92,7 +93,7 @@ class _HomepageState extends State<Homepage> {
                     "/icons/drawer-icon.png",
                     height: 100,
                   ),
-                  Text(
+                  const Text(
                     "Dom's Weeknotes",
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
@@ -100,7 +101,7 @@ class _HomepageState extends State<Homepage> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.repeat),
+              leading: const Icon(Icons.repeat),
               title: const Text('Daily'),
               onTap: () {
                 Navigator.pushNamedAndRemoveUntil(
@@ -108,11 +109,11 @@ class _HomepageState extends State<Homepage> {
               },
             ),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.calendar_today,
                 color: Colors.black,
               ),
-              title: Text(
+              title: const Text(
                 'Weekly',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
@@ -122,7 +123,7 @@ class _HomepageState extends State<Homepage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.arrow_forward),
+              leading: const Icon(Icons.arrow_forward),
               title: const Text('Future'),
               onTap: () {
                 Navigator.pushNamedAndRemoveUntil(
@@ -140,7 +141,7 @@ class _HomepageState extends State<Homepage> {
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) {
-                          return AddNote();
+                          return const AddNote();
                         },
                       ),
                     );
@@ -239,7 +240,17 @@ class NoteV1 extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline4,
               ),
               const SizedBox(height: 10.0),
-              MarkdownBody(data: body),
+              MarkdownBody(
+                data: body,
+                onTapLink: (text, href, title) async {
+                  Uri url = Uri.parse(href!);
+                  if (!await launchUrl(
+                    url,
+                  )) {
+                    throw 'Could not launch $url';
+                  }
+                },
+              ),
               const SizedBox(height: 10.0),
               FirebaseAuth.instance.currentUser?.email ==
                       "dom@chuffed.solutions"
@@ -254,13 +265,13 @@ class NoteV1 extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Text("edit"),
+                      child: const Text("edit"),
                     )
                   : const SizedBox.shrink(),
               const Divider(),
               const SizedBox(height: 30.0)
             ],
           )
-        : SizedBox.shrink();
+        : const SizedBox.shrink();
   }
 }
