@@ -207,42 +207,60 @@ class NoteV1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          DateFormat('yyyy-MM-dd').format(date),
-        ),
-        const SizedBox(height: 10.0),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.headline4,
-        ),
-        Text(
-          emoji,
-          style: Theme.of(context).textTheme.headline4,
-        ),
-        const SizedBox(height: 10.0),
-        MarkdownBody(data: body),
-        const SizedBox(height: 10.0),
-        FirebaseAuth.instance.currentUser?.email == "dom@chuffed.solutions"
-            ? TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) {
-                        return EditNote(queryDocumentSnapshot: doc);
+    // do I show you this note?
+    // if logged in then yes
+    // if not logged and published then yes
+    bool showPost() {
+      if (FirebaseAuth.instance.currentUser?.email == "dom@chuffed.solutions") {
+        return true;
+      } else {
+        if (published) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+
+    return showPost()
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                DateFormat('yyyy-MM-dd').format(date),
+              ),
+              const SizedBox(height: 10.0),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              Text(
+                emoji,
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              const SizedBox(height: 10.0),
+              MarkdownBody(data: body),
+              const SizedBox(height: 10.0),
+              FirebaseAuth.instance.currentUser?.email ==
+                      "dom@chuffed.solutions"
+                  ? TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) {
+                              return EditNote(queryDocumentSnapshot: doc);
+                            },
+                          ),
+                        );
                       },
-                    ),
-                  );
-                },
-                child: Text("edit"),
-              )
-            : const SizedBox.shrink(),
-        const Divider(),
-        const SizedBox(height: 30.0)
-      ],
-    );
+                      child: Text("edit"),
+                    )
+                  : const SizedBox.shrink(),
+              const Divider(),
+              const SizedBox(height: 30.0)
+            ],
+          )
+        : SizedBox.shrink();
   }
 }
