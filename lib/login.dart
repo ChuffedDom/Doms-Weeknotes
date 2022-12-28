@@ -53,3 +53,23 @@ class _LoginState extends State<Login> {
     );
   }
 }
+
+class Logout extends StatelessWidget {
+  const Logout({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 760),
+        child: ElevatedButton(
+          child: const Text("logout"),
+          onPressed: () {
+            FirebaseAuth.instance.signOut();
+            Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+          },
+        ),
+      ),
+    );
+  }
+}

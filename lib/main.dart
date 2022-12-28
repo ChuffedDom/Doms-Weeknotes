@@ -35,6 +35,7 @@ class Weeknotes extends StatelessWidget {
       routes: {
         '/': (context) => const Homepage(),
         '/login': (context) => const Login(),
+        '/logout': (context) => const Logout(),
         '/future': (context) => const FutureNotes(),
         '/edit-future': (context) => const EditFutureNote(),
         '/daily': (context) => const Dailies(),
