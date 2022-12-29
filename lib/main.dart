@@ -29,6 +29,7 @@ class Weeknotes extends StatelessWidget {
     return MaterialApp(
       title: "Dom's Weeknotes",
       theme: ThemeData(
+        useMaterial3: true,
         primarySwatch: Colors.blue,
         fontFamily: '--apple-system',
       ),
