@@ -17,6 +17,8 @@ class _FutureNotesState extends State<FutureNotes> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Dom's Weeknotes"),
+        elevation: 4,
+        shadowColor: Theme.of(context).shadowColor,
       ),
       drawer: Drawer(
         child: ListView(
@@ -24,7 +26,7 @@ class _FutureNotesState extends State<FutureNotes> {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Theme.of(context).colorScheme.surfaceTint,
               ),
               child: Column(
                 children: [

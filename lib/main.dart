@@ -30,7 +30,7 @@ class Weeknotes extends StatelessWidget {
       title: "Dom's Weeknotes",
       theme: ThemeData(
         useMaterial3: true,
-        primarySwatch: Colors.blue,
+        // colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple),
         fontFamily: '--apple-system',
       ),
       initialRoute: "/",
@@ -80,14 +80,16 @@ class _HomepageState extends State<Homepage> {
             }),
           )
         ], */
+        elevation: 4,
+        shadowColor: Theme.of(context).shadowColor,
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Colors.blue,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceTint,
               ),
               child: Column(
                 children: [
@@ -95,9 +97,11 @@ class _HomepageState extends State<Homepage> {
                     "/icons/drawer-icon.png",
                     height: 100,
                   ),
-                  const Text(
+                  Text(
                     "Dom's Weeknotes",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onInverseSurface,
+                        fontSize: 20),
                   ),
                 ],
               ),
@@ -123,6 +127,7 @@ class _HomepageState extends State<Homepage> {
                 Navigator.pushNamedAndRemoveUntil(
                     context, "/", (route) => false);
               },
+              hoverColor: Theme.of(context).hoverColor,
             ),
             ListTile(
               leading: const Icon(Icons.arrow_forward),
@@ -153,7 +158,7 @@ class _HomepageState extends State<Homepage> {
               : const SizedBox.shrink(),
       body: Center(
         child: Container(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 20.0),
           constraints: const BoxConstraints(maxWidth: 760),
           child: StreamBuilder(
               stream: db
@@ -229,17 +234,18 @@ class NoteV1 extends StatelessWidget {
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 30.0),
               Text(
                 DateFormat('yyyy-MM-dd').format(date),
               ),
               const SizedBox(height: 10.0),
               Text(
                 title,
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.displaySmall,
               ),
               Text(
                 emoji,
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.displaySmall,
               ),
               const SizedBox(height: 10.0),
               MarkdownBody(
@@ -271,7 +277,6 @@ class NoteV1 extends StatelessWidget {
                     )
                   : const SizedBox.shrink(),
               const Divider(),
-              const SizedBox(height: 30.0)
             ],
           )
         : const SizedBox.shrink();

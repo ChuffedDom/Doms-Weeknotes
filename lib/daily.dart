@@ -14,14 +14,18 @@ class _DailiesState extends State<Dailies> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Dom's Weeknotes")),
+      appBar: AppBar(
+        title: Text("Dom's Weeknotes"),
+        elevation: 4,
+        shadowColor: Theme.of(context).shadowColor,
+      ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Theme.of(context).colorScheme.surfaceTint,
               ),
               child: Column(
                 children: [

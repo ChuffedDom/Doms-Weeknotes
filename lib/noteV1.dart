@@ -19,6 +19,8 @@ class _AddNoteState extends State<AddNote> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Add note"),
+          elevation: 4,
+          shadowColor: Theme.of(context).shadowColor,
         ),
         body: Center(
           child: Container(
